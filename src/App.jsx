@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "./components/search/Search";
+import CurrentWeather from "./components/current-weather/CurrentWeather";
 import "./App.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <>
       <div className="container">
         <Search onSearchCity={handleOnSearchCity} />
+        <CurrentWeather />
       </div>
     </>
   );

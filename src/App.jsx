@@ -3,48 +3,58 @@ import Search from "./components/search/Search";
 import CurrentWeather from "./components/current-weather/CurrentWeather";
 import "./App.css";
 
-// .then((response) => response.json())
-//       .then((data) =>
-//         console.log("lat, lon ", [data.coord.lat, data.coord.lon])
-
 function App() {
-  const [coordinates, setCoordinates] = useState("");
-  const [current, setCurrent] = useState("");
-  const handleOnSearchCity = (city) => {
-    console.log(city);
+  const [weatherData, setWeatherData] = useState({});
+  const [city, setCity] = useState("New York");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const coordinatesURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_API_KEY}`;
-    const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${String(
-      coordinates.lat
-    )}&lon=${String(coordinates.lon)}&appid=${process.env.REACT_APP_API_KEY}`;
-    const fetchWeather = async (endpoint) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
-        const result = await (await fetch(endpoint)).json();
-        return result;
-      } catch (error) {
-        console.log("ошибка fetch", error);
+        const [currentWeatherResponse, forecast] = await Promise.all([
+          fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_API_KEY}`
+          ),
+          fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_API_KEY}`
+          ).then((res) => res.json()),
+        ]);
+
+        if (!currentWeatherResponse.ok) {
+          throw new Error(currentWeatherResponse.statusText);
+        }
+
+        const currentWeather = await currentWeatherResponse.json();
+
+        setWeatherData({
+          currentWeather,
+          forecast,
+        });
+        setIsLoading(false);
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
       }
     };
+    fetchData();
+  }, [city]);
 
-    fetchWeather(coordinatesURL).then((res) => {
-      setCoordinates({ ...res.coord });
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
-      fetchWeather(currentWeatherURL).then((res) => {
-        setCurrent({ ...res });
-      });
-    });
-
-    // const { lat, lon } = showData();
-    console.log(coordinates);
-    console.log("cuurent", current);
-    // console.log(lon);
-  };
+  if (error) {
+    return <p>Город не найден {error.message}</p>;
+  }
 
   return (
     <>
       <div className="container">
-        <Search onSearchCity={handleOnSearchCity} />
-        <CurrentWeather data={current} />
+        <Search onSearchCity={setCity} />
+        <CurrentWeather data={weatherData.currentWeather} />
       </div>
     </>
   );

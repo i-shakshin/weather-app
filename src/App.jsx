@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Search from "./components/search/Search";
 import CurrentWeather from "./components/current-weather/CurrentWeather";
+import Forecast from "./components/forecast/Forecast";
 import "./App.css";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
       }
     };
     fetchData();
+    //  console.log(weatherData.forecast.list);
   }, [city]);
 
   if (isLoading) {
@@ -55,6 +57,7 @@ function App() {
       <div className="container">
         <Search onSearchCity={setCity} />
         <CurrentWeather data={weatherData.currentWeather} />
+        <Forecast data={weatherData.forecast} />
       </div>
     </>
   );

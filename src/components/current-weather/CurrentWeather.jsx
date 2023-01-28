@@ -9,6 +9,7 @@ const CurrentWeather = ({ data }) => {
       <div className="top">
         <div>
           <p className="city">{data.name}</p>
+          <p className="dayweek">Test Week</p>
           <p className="weather-description">{data.weather[0].description}</p>
         </div>
         <img

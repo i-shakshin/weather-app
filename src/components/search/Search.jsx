@@ -1,4 +1,12 @@
 import { useState } from "react";
+import styled from "@emotion/styled";
+import { TextField, Button } from "@mui/material";
+
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Search = ({ onSearchCity }) => {
   const [search, setSearch] = useState("");
@@ -9,19 +17,17 @@ const Search = ({ onSearchCity }) => {
   };
 
   return (
-    <>
-      <label>
-        Введите город:
-        <input value={search} onChange={(e) => setSearch(e.target.value)} />
-        <button
-          onClick={() => {
-            handleOnClick();
-          }}
-        >
-          Искать
-        </button>
-      </label>
-    </>
+    <SearchContainer>
+      <TextField
+        variant="outlined"
+        label="Enter city"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <Button variant="filled" color="primary" onClick={handleOnClick}>
+        Search
+      </Button>
+    </SearchContainer>
   );
 };
 

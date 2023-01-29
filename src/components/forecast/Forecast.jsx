@@ -1,3 +1,4 @@
+import { groupHoursByDate, forecastDates, forecastDays } from "../utils";
 import "./Forecast.css";
 
 const Forecast = ({ data }) => {
@@ -5,41 +6,16 @@ const Forecast = ({ data }) => {
     return <p>Loading...</p>;
   }
 
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const groupHoursByDate = data.list.reduce(function (acc, forecastHour) {
-    acc[forecastHour.dt_txt.split(" ")[0]] =
-      acc[forecastHour.dt_txt.split(" ")[0]] || [];
-    acc[forecastHour.dt_txt.split(" ")[0]].push(forecastHour);
-    return acc;
-  }, Object.create(null));
-
-  const forecastDates = Object.keys(groupHoursByDate).slice(1, -1);
-
-  const forecastDays = forecastDates.map((forecastDate) => {
-    const d = new Date(forecastDate);
-    const day = daysOfWeek[d.getDay()];
-    return day;
-  });
-
-  console.log("test", groupHoursByDate["2023-01-29"]);
-
   return (
     <div className="forecast">
-      <h2 className="forecast-title">4 Day / 3 Hour Forecast</h2>
+      <h2 className="forecast-title">
+        {forecastDates(data).length} Day / 3 Hour Forecast
+      </h2>
       <div className="card-container">
-        {forecastDays.map((forecastDay, index) => (
+        {forecastDays(forecastDates(data)).map((forecastDay, index) => (
           <div className="day-forecast" key={index}>
             <h2>{forecastDay}</h2>
-            {groupHoursByDate[forecastDates[index]].map(
+            {groupHoursByDate(data)[forecastDates(data)[index]].map(
               (currentDay, indexHours) => {
                 return (
                   <div className="hour-forecast" key={indexHours}>

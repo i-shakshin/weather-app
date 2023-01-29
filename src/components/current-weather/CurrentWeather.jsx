@@ -1,5 +1,5 @@
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { forecastDays } from "../../utils";
-import "./CurrentWeather.css";
 
 const CurrentWeather = ({ data }) => {
   if (!data) {
@@ -7,49 +7,63 @@ const CurrentWeather = ({ data }) => {
   }
 
   return (
-    <>
-      <h2 className="weather-title">Current Day Forecast</h2>
-      <div className="weather">
-        <div className="top">
-          <div>
-            <p className="city">{data.name}</p>
-            <p className="day">{forecastDays([data.dt * 1000])}</p>
-            <p className="weather-description">{data.weather[0].description}</p>
-          </div>
-          <img
-            alt="weather"
-            className="weather-icon"
-            src={`icons/${data.weather[0].icon}.png`}
+    <Card sx={{ maxWidth: 450 }}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h3">{data.name}</Typography>
+            <Typography variant="span">
+              {forecastDays([data.dt * 1000])}
+            </Typography>
+            <Typography variant="span">
+              {data.weather[0].description}
+            </Typography>
+          </CardContent>
+          <CardMedia
+            component="img"
+            sx={{ width: "150px" }}
+            image={`icons/${data.weather[0].icon}.png`}
+            alt={`Current weather is ${data.weather[0].description}`}
           />
-        </div>
-        <div className="bottom">
-          <p className="temperature">{Math.round(data.main.temp)}°C</p>
-          <div className="details">
-            <div className="parameter-row">
-              <span className="parameter-label">Details:</span>
-            </div>
-            <div className="parameter-row">
-              <span className="parameter-label">Feels like</span>
-              <span className="parameter-value">
-                {Math.round(data.main.feels_like)}°C
-              </span>
-            </div>
-            <div className="parameter-row">
-              <span className="parameter-label">Wind</span>
-              <span className="parameter-value">{data.wind.speed} m/s</span>
-            </div>
-            <div className="parameter-row">
-              <span className="parameter-label">Humidity</span>
-              <span className="parameter-value">{data.main.humidity}%</span>
-            </div>
-            <div className="parameter-row">
-              <span className="parameter-label">Pressure</span>
-              <span className="parameter-value">{data.main.pressure} hPa</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <CardContent sx={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="h3">{Math.round(data.main.temp)}°C</Typography>
+          </CardContent>
+          <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6">Details:</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "20px",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography variant="span">Feels like:</Typography>
+                <Typography variant="span">Wind:</Typography>
+                <Typography variant="span">Humidity:</Typography>
+                <Typography variant="span">Pressure:</Typography>
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography variant="span">
+                  {Math.round(data.main.feels_like)} °C
+                </Typography>
+                <Typography variant="span">{data.wind.speed} m/s</Typography>
+                <Typography variant="span">{data.main.humidity}%</Typography>
+                <Typography variant="span">{data.main.pressure} hPa</Typography>
+              </Box>
+            </Box>
+          </CardContent>
+        </Box>
+      </Box>
+    </Card>
   );
 };
 

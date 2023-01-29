@@ -19,12 +19,13 @@ const Search = ({ onSearchCity }) => {
   return (
     <SearchContainer>
       <TextField
+        size="small"
         variant="outlined"
         label="Enter city"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <Button variant="filled" color="primary" onClick={handleOnClick}>
+      <Button variant="outlined" color="inherit" onClick={handleOnClick}>
         Search
       </Button>
     </SearchContainer>

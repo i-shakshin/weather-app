@@ -1,4 +1,4 @@
-import { daysOfWeek, forecastDays } from "../utils";
+import { forecastDays } from "../../utils";
 import "./CurrentWeather.css";
 
 const CurrentWeather = ({ data }) => {

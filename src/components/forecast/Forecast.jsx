@@ -1,4 +1,4 @@
-import { groupHoursByDate, forecastDates, forecastDays } from "../utils";
+import { groupHoursByDate, forecastDates, forecastDays } from "../../utils";
 import "./Forecast.css";
 
 const Forecast = ({ data }) => {

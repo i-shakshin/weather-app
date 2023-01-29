@@ -3,11 +3,7 @@ import Search from "./components/search/Search";
 import CurrentWeather from "./components/current-weather/CurrentWeather";
 import Forecast from "./components/forecast/Forecast";
 import { useWeatherFetch } from "./hooks/useWeatherFetch";
-import {
-  forecastDates,
-  forecastDays,
-  groupHoursByDate,
-} from "./components/utils";
+import { forecastDates, forecastDays, groupHoursByDate } from "./utils";
 import "./App.css";
 
 function App() {

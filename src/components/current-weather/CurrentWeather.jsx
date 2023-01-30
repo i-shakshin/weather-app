@@ -7,63 +7,78 @@ const CurrentWeather = ({ data }) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 450 }}>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <CardContent
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h3">{data.name}</Typography>
-            <Typography variant="span">
-              {forecastDays([data.dt * 1000])}
-            </Typography>
-            <Typography variant="span">
-              {data.weather[0].description}
-            </Typography>
-          </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: "150px" }}
-            image={`icons/${data.weather[0].icon}.png`}
-            alt={`Current weather is ${data.weather[0].description}`}
-          />
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <CardContent sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="h3">{Math.round(data.main.temp)}°C</Typography>
-          </CardContent>
-          <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6">Details:</Typography>
-            <Box
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          py: 2,
+        }}
+      >
+        <Typography variant="h2">Current Weather</Typography>
+      </Box>
+      <Card sx={{ maxWidth: 450, mx: "auto", bgcolor: "#BDB7AB" }}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <CardContent
               sx={{
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "space-between",
-                gap: "20px",
               }}
             >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="span">Feels like:</Typography>
-                <Typography variant="span">Wind:</Typography>
-                <Typography variant="span">Humidity:</Typography>
-                <Typography variant="span">Pressure:</Typography>
+              <Typography variant="h3">{data.name}</Typography>
+              <Typography variant="span">
+                {forecastDays([data.dt * 1000])}
+              </Typography>
+              <Typography variant="span">
+                {data.weather[0].description}
+              </Typography>
+            </CardContent>
+            <CardMedia
+              component="img"
+              sx={{ width: "150px" }}
+              image={`icons/${data.weather[0].icon}.png`}
+              alt={`Current weather is ${data.weather[0].description}`}
+            />
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <CardContent sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="h3">
+                {Math.round(data.main.temp)}°C
+              </Typography>
+            </CardContent>
+            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h6">Details:</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "20px",
+                }}
+              >
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography variant="span">Feels like:</Typography>
+                  <Typography variant="span">Wind:</Typography>
+                  <Typography variant="span">Humidity:</Typography>
+                  <Typography variant="span">Pressure:</Typography>
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography variant="span">
+                    {Math.round(data.main.feels_like)} °C
+                  </Typography>
+                  <Typography variant="span">{data.wind.speed} m/s</Typography>
+                  <Typography variant="span">{data.main.humidity}%</Typography>
+                  <Typography variant="span">
+                    {data.main.pressure} hPa
+                  </Typography>
+                </Box>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="span">
-                  {Math.round(data.main.feels_like)} °C
-                </Typography>
-                <Typography variant="span">{data.wind.speed} m/s</Typography>
-                <Typography variant="span">{data.main.humidity}%</Typography>
-                <Typography variant="span">{data.main.pressure} hPa</Typography>
-              </Box>
-            </Box>
-          </CardContent>
+            </CardContent>
+          </Box>
         </Box>
-      </Box>
-    </Card>
+      </Card>
+    </>
   );
 };
 

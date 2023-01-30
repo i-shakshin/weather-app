@@ -3,31 +3,22 @@ import Search from "./components/search/Search";
 import CurrentWeather from "./components/current-weather/CurrentWeather";
 import Forecast from "./components/forecast/Forecast";
 import { useWeatherFetch } from "./hooks/useWeatherFetch";
-import { forecastDates, forecastDays, groupHoursByDate } from "./utils";
-import "./App.css";
+import { CircularProgress, Container } from "@mui/material";
 
 function App() {
   const [weatherData, isLoading, error, fetchData] = useWeatherFetch();
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <CircularProgress color="inherit" />;
   }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  // console.log("test", forecastDays(forecastDates(weatherData.forecast)));
-  // console.log("test", groupHoursByDate(weatherData.forecast)["2023-01-30"]);
-  // console.log("test", forecastDates(weatherData.forecast)[0]);
 
   return (
     <>
-      <div className="container">
-        <Search onSearchCity={fetchData} />
+      <Container>
+        <Search onSearchCity={fetchData} error={error} />
         <CurrentWeather data={weatherData.currentWeather} />
         <Forecast data={weatherData.forecast} />
-      </div>
+      </Container>
     </>
   );
 }
